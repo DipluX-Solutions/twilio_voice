@@ -511,8 +511,11 @@ class TVConnectionService : ConnectionService() {
         }
         connection.extras = requestBundle
 
+        Log.d(TAG,"RAW CUSTOM APPLY${callParams.fromRaw}=>${callParams.toRaw}=>${callParams.customParameters}")
+
         // Setup connection event listeners and UI parameters
         attachCallEventListeners(connection, ci.callSid)
+
         applyParameters(connection, callParams)
         connection.setRinging()
 
@@ -649,7 +652,7 @@ class TVConnectionService : ConnectionService() {
         params.getExtra(TVParameters.PARAM_SUBJECT, null)?.let {
             connection.extras.putString(TelecomManager.EXTRA_CALL_SUBJECT, it)
         }
-        Log.d(TAG,"${params.customParameters}")
+        Log.d(TAG,"CUSTOM PARAM APPLY ${params.customParameters}")
         val name = if(connection.callDirection == CallDirection.OUTGOING) params.to else params.from
         connection.setAddress(Uri.fromParts(PhoneAccount.SCHEME_TEL, name, null), TelecomManager.PRESENTATION_ALLOWED)
         connection.setCallerDisplayName(name, TelecomManager.PRESENTATION_ALLOWED)
